@@ -1,0 +1,46 @@
+version: "3.8"
+
+services:
+  server:
+    build: .
+    command: python src/infrastructure/network/server.py
+    ports:
+      - "8765:8765"
+    networks:
+      - chat-net
+
+  mitm:
+    build: .
+    command: python mitm_attack/mitm_proxy.py
+    ports:
+      - "8766:8766"
+    environment:
+      - REAL_SERVER_URI=ws://server:8765
+    depends_on:
+      - server
+    networks:
+      - chat-net
+
+  client_alice:
+    build: .
+    command: python src/infrastructure/cli/client.py Alice ws://server:8765
+    stdin_open: true
+    tty: true
+    networks:
+      - chat-net
+    depends_on:
+      - server
+
+  client_bob:
+    build: .
+    command: python src/infrastructure/cli/client.py Bob ws://server:8765
+    stdin_open: true
+    tty: true
+    networks:
+      - chat-net
+    depends_on:
+      - server
+
+networks:
+  chat-net:
+    driver: bridge
