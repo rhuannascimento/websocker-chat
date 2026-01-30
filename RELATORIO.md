@@ -3,6 +3,8 @@
 **Disciplina:** Segurança em Sistemas de Computação  
 **Projeto:** Secure Chat - E2E Encryption Proof of Concept  
 **Data:** 30 de janeiro de 2026
+of Concept  
+**Alunos:** Rhuan Nascimento Ferreira, Igor Almeida Guedes
 
 ---
 
